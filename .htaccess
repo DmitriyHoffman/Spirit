@@ -1,0 +1,23 @@
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+#Редиректы на страницы
+
+RewriteRule ^user/id/([0-9]+)$ user.php?id=$1
+RewriteRule ^user/([0-9]+)$ user.php?id=$1
+RewriteRule ^wheel$ modes/wheel.php [L]
+RewriteRule ^wheel.php$ modes/wheel.php [L]
+
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php 
+ErrorDocument 404 /error404
+
+php_flag display_errors on
+php_value error_reporting 0
+RewriteEngine On
+RewriteCond %{SERVER_PORT} !^443$
+RewriteBase /
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
